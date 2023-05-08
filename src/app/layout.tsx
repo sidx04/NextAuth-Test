@@ -1,5 +1,7 @@
+import Providers from "@/components/Providers";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import AppBar from "@/components/Appbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
-      <body className="flex h-full flex-col">
-       <main>{children} </main>
+      <body>
+        <Providers>
+          <AppBar />
+          {children}
+        </Providers>
       </body>
     </html>
   );

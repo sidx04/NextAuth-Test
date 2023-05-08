@@ -1,5 +1,4 @@
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const handler = NextAuth({
@@ -19,12 +18,16 @@ const handler = NextAuth({
        */
 
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "johndoe" },
+        username: {
+          label: "Username",
+          type: "text",
+          placeholder: "johndoe@gmail.com",
+        },
         password: { label: "Password", type: "password" },
       },
 
       async authorize(credentials, req) {
-        const res = await fetch("/api/login", {
+        const res = await fetch("http://localhost:3000/api/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -37,16 +40,18 @@ const handler = NextAuth({
 
         const user = await res.json();
 
-        if (!user) {
+        if (user) {
           return user;
-        }
-
-        else{
+        } else {
           return null;
         }
       },
     }),
   ],
+
+  session: {
+    strategy: "jwt",
+  },
 });
 
 export { handler as GET, handler as POST };
