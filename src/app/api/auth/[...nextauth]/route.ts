@@ -24,15 +24,24 @@ const handler = NextAuth({
       },
 
       async authorize(credentials, req) {
-        const user = {
-          id: "1",
-          name: "John Doe",
-          email: "johndoe@example.com",
-        };
+        const res = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: credentials?.username,
+            password: credentials?.password,
+          }),
+        });
 
-        if (user) {
+        const user = await res.json();
+
+        if (!user) {
           return user;
-        } else {
+        }
+
+        else{
           return null;
         }
       },
