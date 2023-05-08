@@ -1,4 +1,3 @@
-import Provider from "./components/Provider";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -17,11 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body className="flex h-full flex-col">
-        <Provider>
-          <Header/>
-          <main></main>
-          <Footer/>
-        </Provider>
+       <main>{children} </main>
       </body>
     </html>
   );
